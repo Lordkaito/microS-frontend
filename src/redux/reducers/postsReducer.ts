@@ -9,7 +9,10 @@ const postsSlice = createSlice({
       state.push(action.payload);
     },
     removePost: (state, action: PayloadAction<number>) => {
-      return state.filter((post) => post.id !== action.payload);
+      const index = state.findIndex((post) => post.id === action.payload);
+      if (index !== -1) {
+        state.splice(index, 1);
+      }
     },
     likePost: (state, action: PayloadAction<LikePayload>) => {
       const post = state.find((post) => post.id === action.payload.postId);

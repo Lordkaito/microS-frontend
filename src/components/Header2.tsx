@@ -3,12 +3,14 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  User,
   Link,
-  Button,
 } from "@nextui-org/react";
+import { store } from "../redux/store";
 import Loader from "./Loader";
 
 const Header = () => {
+  const user = store.getState().user;
   return (
     <header>
       <Loader />
@@ -36,16 +38,21 @@ const Header = () => {
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
-            {/* <Link href="#">Login</Link> */}
+          {/* <NavbarItem className="hidden lg:flex">
             <Button as={Link} color="primary" href="#" variant="shadow">
               Sign Up
             </Button>
-          </NavbarItem>
+          </NavbarItem> */}
           <NavbarItem>
-            <Button as={Link} color="secondary" href="/home" variant="ghost">
-              Log in
-            </Button>
+            <User
+              name={user.name}
+              description={user.email}
+              avatarProps={{
+                src: "https://www.plenodelafemp.es/wp-content/uploads/2014/10/speaker-3.jpg",
+                color: "success",
+                isBordered: true,
+              }}
+            />
           </NavbarItem>
         </NavbarContent>
       </Navbar>

@@ -3,14 +3,25 @@ import { User } from "../../config/interfaces";
 
 const userSlice = createSlice({
   name: "user",
-  initialState: {} as User,
+  initialState: {
+    email: "",
+    id: 0,
+    name: "",
+    posts: [],
+  } as User,
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
-      state = action.payload;
+      state.email = action.payload.email;
+      state.id = action.payload.id;
+      state.name = action.payload.name;
+      state.posts = action.payload.posts;
     },
 
     removeUser: (state) => {
-      state = {} as User;
+      state.email = "";
+      state.id = 0;
+      state.name = "";
+      state.posts = [];
     },
   },
 });

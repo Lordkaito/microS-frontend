@@ -1,13 +1,24 @@
 import Header from "../components/Header";
 import { Button, Input } from "@nextui-org/react";
-import { useNavigate, Route, Routes } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/reducers/usersReducer";
 
 const Landing = () => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState<string>("");
   const navigate = useNavigate();
-  const handleRedirect = (e: any) => {
+  const handleRedirect = (e: any, email: string) => {
     e.preventDefault();
-    navigate("/home");
-  }
+    console.log(email);
+    if (email === "") {
+      alert("Please enter your email");
+      return;
+    }
+    dispatch(setUser({ email: email, id: 0, name: "guest", posts: [] }));
+    navigate("/signup");
+  };
   return (
     <>
       <Header />
@@ -21,9 +32,16 @@ const Landing = () => {
               size="sm"
               description="By signing up you accept our terms and conditions"
               isRequired
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
             {/* TODO: we need to use Formik to manage forms and data */}
-            <Button color="primary" variant="shadow" onClick={(e) => handleRedirect(e)}>
+            <Button
+              color="primary"
+              variant="shadow"
+              onClick={(e) => handleRedirect(e, email)}
+            >
               Sign up
             </Button>
           </div>
