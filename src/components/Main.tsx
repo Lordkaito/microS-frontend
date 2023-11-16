@@ -8,7 +8,6 @@ import {
   Button,
   CircularProgress,
   useDisclosure,
-  Skeleton,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 

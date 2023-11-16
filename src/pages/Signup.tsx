@@ -2,8 +2,6 @@ import Loader from "../components/Loader";
 import {
   Card,
   CardBody,
-  // CardFooter,
-  Input,
   CardHeader,
   Button,
 } from "@nextui-org/react";

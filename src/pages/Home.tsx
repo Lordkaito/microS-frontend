@@ -3,8 +3,6 @@ import Navigation from "../components/Navigation";
 import Main from "../components/Main";
 import Aside from "../components/Aside";
 import Footer from "../components/Footer";
-import { Skeleton } from "@nextui-org/react";
-import { useState, useEffect } from "react";
 
 function Home() {
   return (
