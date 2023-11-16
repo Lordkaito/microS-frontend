@@ -1,6 +1,6 @@
 const Navigation = () => {
   return (
-    <nav className="w-60 bg-slate-400">
+    <nav className="flex-grow bg-slate-400 sm:flex-grow-0 sm:w-60">
       <h2>
         Navigation
       </h2>

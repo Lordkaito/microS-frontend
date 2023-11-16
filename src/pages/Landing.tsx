@@ -11,7 +11,6 @@ const Landing = () => {
   const navigate = useNavigate();
   const handleRedirect = (e: any, email: string) => {
     e.preventDefault();
-    console.log(email);
     if (email === "") {
       alert("Please enter your email");
       return;
