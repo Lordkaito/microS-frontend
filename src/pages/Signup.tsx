@@ -1,15 +1,39 @@
 import Loader from "../components/Loader";
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Button,
-} from "@nextui-org/react";
+import axios from "axios";
+import { Card, CardBody, CardHeader, Button } from "@nextui-org/react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { store } from "../redux/store";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/reducers/usersReducer";
 
 const Signup = () => {
   let redirectedEmail = store.getState().user.email;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const signUpUser = async (
+    email: string,
+    password: string,
+    name: string
+  ) => {
+    try {
+      const url = "http://localhost:8080/signup";
+      const data = {
+        email,
+        password,
+        name,
+      };
+      const response = await axios.post(url, data);
+      console.log(response);
+      if (response.status === 201) {
+        alert("User created successfully");
+        dispatch(setUser(response.data.user));
+        navigate("/home");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <Loader />
@@ -20,7 +44,11 @@ const Signup = () => {
           </CardHeader>
           <CardBody>
             <Formik
-              initialValues={{ email: redirectedEmail, password: "", username: "" }}
+              initialValues={{
+                email: redirectedEmail,
+                password: "",
+                name: "",
+              }}
               validate={(values) => {
                 const errors: any = {};
                 if (!values.email) {
@@ -31,11 +59,11 @@ const Signup = () => {
                   errors.email = "Invalid email address";
                 }
 
-                if (!values.username) {
-                  errors.username = "Required";
-                } else if (values.username.length < 3) {
-                  errors.username =
-                    "Username must be at least 3 characters long";
+                if (!values.name) {
+                  errors.name = "Required";
+                } else if (values.name.length < 3) {
+                  errors.name =
+                    "name must be at least 3 characters long";
                 }
 
                 if (!values.password) {
@@ -48,6 +76,7 @@ const Signup = () => {
               }}
               onSubmit={(values, { setSubmitting }) => {
                 // this will handle the form submission later
+                signUpUser(values.email, values.password, values.name);
                 setTimeout(() => {
                   alert(JSON.stringify(values, null, 2));
                   setSubmitting(false);
@@ -68,13 +97,13 @@ const Signup = () => {
                     className="text-[#F31260]"
                   />
                   <Field
-                    type="username"
-                    name="username"
-                    placeholder="username"
+                    type="name"
+                    name="name"
+                    placeholder="name"
                     className="w-3/4"
                   />
                   <ErrorMessage
-                    name="username"
+                    name="name"
                     component="div"
                     className="text-[#F31260]"
                   />
